@@ -22,6 +22,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.octopus.dashboard.aop.ApiRestMonitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.stereotype.Component;
@@ -29,6 +32,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class HelloServiceMonitor {
+	private static final Logger logger = LoggerFactory.getLogger(ApiRestMonitor.class);
 	private final CounterService counterService;
 
 	@Autowired
@@ -43,7 +47,8 @@ public class HelloServiceMonitor {
 
 	@AfterReturning("execution(* org.octopus.dashboard..*Service.*(..))")
 	public void logServiceAccess(JoinPoint joinPoint) {
-		System.out.println("Completed: " + joinPoint);
+		counterService.increment("counter.service");
+		logger.debug("Completed: " + joinPoint);
 	}
 
 }
