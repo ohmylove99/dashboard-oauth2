@@ -1,0 +1,10 @@
+insert into type(id,grp,name,detail) values(1,'EMPGRADE','C9','C9');
+insert into type(id,grp,name,detail) values(2,'EMPGRADE','C10','C10');
+insert into type(id,grp,name,detail) values(3,'EMPGRADE','C11','C11');
+insert into type(id,grp,name,detail) values(4,'EMPGRADE','C12','C12');
+insert into type(id,grp,name,detail) values(5,'EMPGRADE','C13','C13');
+insert into type(id,grp,name,detail) values(6,'EMPTYPE','DH','Direct Hire');
+insert into type(id,grp,name,detail) values(7,'EMPTYPE','VD','Vendor');
+insert into type(id,grp,name,detail) values(8,'COMSITE','SH', 'Shang Hai');
+insert into type(id,grp,name,detail) values(9,'COMSITE','DL', 'Da Lian');
+insert into type(id,grp,name,detail) values(10,'COMSITE','GZ', 'Guang Zhou');

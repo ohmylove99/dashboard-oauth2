@@ -3,9 +3,9 @@ buildscript {
 		springBootVersion = '1.4.0.RELEASE'
 	}
 	repositories {
-		mavenCentral()
-		maven {url 'https://repo.spring.io/libs-milestone'}
-		maven {url 'https://repo.apache.org/maven2'}
+	//	mavenCentral()
+	maven {url 'http://repo1.maven.org/maven2'}
+	maven {url 'http://repo.spring.io/milestone'}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -24,9 +24,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-	mavenCentral()
-	maven {url 'https://repo.spring.io/libs-milestone'}
-	maven {url 'https://repo.apache.org/maven2'}
+	//mavenCentral()
+	maven {url 'http://repo1.maven.org/maven2'}
+	maven {url 'http://repo.spring.io/milestone'}
 }
 
 
@@ -37,7 +37,11 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-aop')
-	compile('net.logstash.logback:logstash-logback-encoder')
-
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('net.logstash.logback:logstash-logback-encoder:4.7')
+	compile('org.testng:testng:6.9.9')
+	compile('mysql:mysql-connector-java')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.apache.commons:commons-lang3:3.4')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
