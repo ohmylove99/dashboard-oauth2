@@ -9,9 +9,9 @@ insert into type(id,grp,name,detail) values(8,'COMSITE','SH', 'Shang Hai');
 insert into type(id,grp,name,detail) values(9,'COMSITE','DL', 'Da Lian');
 insert into type(id,grp,name,detail) values(10,'COMSITE','GZ', 'Guang Zhou');
 
-insert into user(id, name, login, password) values (1,'Roy','roy','spring');
-insert into user(id, name, login, password) values (2,'Craig','craig','spring');
-insert into user(id, name, login, password) values (3,'Greg','greg','spring');
+insert into user(id, name, login_name, password) values (1,'Admin','admin','JIkCExpzJiiu9uKHKCfbEN98B78=');
+insert into user(id, name, login_name, password) values (2,'User','user','JIkCExpzJiiu9uKHKCfbEN98B78=');
+insert into user(id, name, login_name, password) values (3,'Guest','guest','JIkCExpzJiiu9uKHKCfbEN98B78=');
  
 insert into role(id, name) values (1,'ROLE_USER');
 insert into role(id, name) values (2,'ROLE_ADMIN');

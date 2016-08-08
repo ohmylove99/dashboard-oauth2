@@ -37,8 +37,8 @@ public class ErrorPageController implements ErrorController {
 
 		ErrorResult result = new ErrorResult();
 		result.code = (int) attributes.get("status");
-		result.message = (String) attributes.get("error");
-
+		result.error = (String) attributes.get("error");
+		result.message = (String) attributes.get("message");
 		logError(attributes, request);
 
 		return result;

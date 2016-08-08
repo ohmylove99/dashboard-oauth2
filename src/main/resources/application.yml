@@ -78,6 +78,7 @@ security:
 management:
   port: 8081
 
+spring.cache.jcache.config: ehcache3.xml
 
 project:
   name: dashboard
