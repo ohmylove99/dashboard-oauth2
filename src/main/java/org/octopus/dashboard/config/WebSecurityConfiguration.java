@@ -27,6 +27,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) {
 		try {
@@ -46,19 +52,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		//http.authorizeRequests().antMatchers("/configuration/**","/swagger**","/webjars/**","/v2/**").permitAll();
 		http.authorizeRequests().antMatchers("/signup", "/about").permitAll() // #4
 				.antMatchers("/admin/**").hasRole("ADMIN") // #6
-				.anyRequest().authenticated() // 7
+				.antMatchers("/oauth/**").permitAll().anyRequest().authenticated() // 7
 				.and().formLogin() // #8
 				.failureUrl("/login?error") // #9
 				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login").and()
-				.csrf().and().rememberMe(); // #5
-	}
-
-	@Override
-	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+				// .csrf().and()
+				.csrf().disable().rememberMe(); // #5
 	}
 
 	@Bean

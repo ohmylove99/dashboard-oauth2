@@ -1,11 +1,8 @@
 package org.octopus.dashboard.api.rest;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
-import org.octopus.dashboard.data.entity.User;
 import org.octopus.dashboard.service.HelloService;
 import org.octopus.dashboard.shared.constants.MediaTypes;
 import org.slf4j.Logger;
@@ -13,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,14 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloRestEndPoint {
-	private static final String template = "Hello, %s!";
-
-	private final AtomicLong counter = new AtomicLong();
-
-	@RequestMapping("/greeting")
-	public Map<Long, String> greeting(@AuthenticationPrincipal User user) {
-		return Collections.singletonMap(counter.incrementAndGet(), String.format(template, user.getName()));
-	}
 
 	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(HelloRestEndPoint.class);
@@ -48,7 +36,8 @@ public class HelloRestEndPoint {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/api/rest/hello/resmap", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
 	public ResponseEntity<Map> getStringResEntMap() {
-		return new ResponseEntity<Map>(Collections.singletonMap("hello", "Jason"), HttpStatus.OK);
+		return new ResponseEntity<Map>(Collections.singletonMap("hello", "Jason"),
+				HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/api/rest/hello/resstring", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)

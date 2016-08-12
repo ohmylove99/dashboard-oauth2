@@ -1,5 +1,7 @@
 package org.octopus.dashboard.config;
 
+import javax.sql.DataSource;
+
 import org.octopus.dashboard.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,18 +17,22 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-//@Configuration
+@Configuration
 public class OAuth2ServerConfiguration {
 
 	private static final String RESOURCE_ID = "restservice";
 
 	@Configuration
-	//@EnableResourceServer
-	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+	@EnableResourceServer
+	protected static class ResourceServerConfiguration
+			extends ResourceServerConfigurerAdapter {
 
 		@Override
 		public void configure(ResourceServerSecurityConfigurer resources) {
@@ -38,6 +44,7 @@ public class OAuth2ServerConfiguration {
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
 			// @formatter:off
+			http.authorizeRequests().antMatchers("/configuration/**","/swagger**","/webjars/**","/v2/**").permitAll();
 			http.authorizeRequests()
 					.antMatchers("/", "/lib/*", "/images/*", "/css/*", "/swagger-ui.js", "/swagger-ui.min.js",
 							"/swagger-ui.html", "/api-docs", "/fonts/*", "/api-docs/*", "/api-docs/default/*",
@@ -48,9 +55,10 @@ public class OAuth2ServerConfiguration {
 
 	}
 
-	//@Configuration
-	//@EnableAuthorizationServer
-	protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+	@Configuration
+	@EnableAuthorizationServer
+	protected static class AuthorizationServerConfiguration
+			extends AuthorizationServerConfigurerAdapter {
 
 		private TokenStore tokenStore = new InMemoryTokenStore();
 
@@ -61,10 +69,16 @@ public class OAuth2ServerConfiguration {
 		@Autowired
 		private CustomUserDetailsService userDetailsService;
 
+		@Autowired
+		private DataSource dataSource;
+
 		@Override
-		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+				throws Exception {
 			// @formatter:off
-			endpoints.tokenStore(this.tokenStore).authenticationManager(this.authenticationManager)
+			endpoints.tokenStore(this.tokenStore)
+			//.tokenStore(tokenStore()).approvalStoreDisabled()
+			.authenticationManager(this.authenticationManager)
 					.userDetailsService(userDetailsService);
 			// @formatter:on
 		}
@@ -72,7 +86,9 @@ public class OAuth2ServerConfiguration {
 		@Override
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 			// @formatter:off
-			clients.inMemory().withClient("clientapp").authorizedGrantTypes("password", "refresh_token")
+			clients.inMemory().
+					//.jdbc(dataSource).
+				withClient("clientapp").authorizedGrantTypes("password", "refresh_token")
 					.authorities("USER").scopes("read", "write").resourceIds(RESOURCE_ID).secret("123456");
 			// @formatter:on
 		}
@@ -86,6 +102,15 @@ public class OAuth2ServerConfiguration {
 			return tokenServices;
 		}
 
+		@Bean
+		public JdbcTokenStore tokenStore() {
+			return new JdbcTokenStore(dataSource);
+		}
+
+		@Bean
+		protected AuthorizationCodeServices authorizationCodeServices() {
+			return new JdbcAuthorizationCodeServices(dataSource);
+		}
 	}
 
 }

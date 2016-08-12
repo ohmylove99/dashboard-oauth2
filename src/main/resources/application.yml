@@ -80,6 +80,17 @@ management:
 
 spring.cache.jcache.config: ehcache3.xml
 
+security.user.name: greg
+security.user.password: turnquist
+security.oauth2.client.client-id: foo
+security.oauth2.client.client-secret: bar
+security.oauth2.authorization.checkTokenAccess: isAuthenticated()
+
+
+
+logging.level.org.springframework.security: DEBUG
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+
 project:
   name: dashboard
   version: 1.0

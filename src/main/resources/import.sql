@@ -13,9 +13,9 @@ insert into user(id, name, login_name, password) values (1,'Admin','admin','JIkC
 insert into user(id, name, login_name, password) values (2,'User','user','JIkCExpzJiiu9uKHKCfbEN98B78=');
 insert into user(id, name, login_name, password) values (3,'Guest','guest','JIkCExpzJiiu9uKHKCfbEN98B78=');
  
-insert into role(id, name) values (1,'ROLE_USER');
-insert into role(id, name) values (2,'ROLE_ADMIN');
-insert into role(id, name) values (3,'ROLE_GUEST'); 
+insert into role(id, name) values (1,'USER');
+insert into role(id, name) values (2,'ADMIN');
+insert into role(id, name) values (3,'GUEST'); 
 
 insert into user_role(user_id, role_id) values (1,1);
 insert into user_role(user_id, role_id) values (1,2);

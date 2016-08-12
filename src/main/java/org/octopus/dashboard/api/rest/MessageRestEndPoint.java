@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class MessageRestEndPoint {
 	@Autowired
 	private MessageRepository repository;
 
-	@RequestMapping("/message")
+	@RequestMapping(value = "/api/rest/message", method = RequestMethod.GET)
 	public Message get(@RequestParam("code") String code) {
 		Message msg = repository.findByCode(code);
 		if (msg == null) {

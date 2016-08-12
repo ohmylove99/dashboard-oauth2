@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="1" total="1" passed="0">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="15299" started-at="2016-08-10T13:57:33Z" finished-at="2016-08-10T13:57:48Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="15299" started-at="2016-08-10T13:57:33Z" finished-at="2016-08-10T13:57:48Z">
+      <class name="org.octopus.dashboard.SampleTestNGApplicationTests">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()[pri:0, instance:org.octopus.dashboard.SampleTestNGApplicationTests@3aa078fd]" name="springTestContextBeforeTestClass" is-config="true" duration-ms="7" started-at="2016-08-10T21:57:33Z" finished-at="2016-08-10T21:57:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestClass -->
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()[pri:0, instance:org.octopus.dashboard.SampleTestNGApplicationTests@3aa078fd]" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="14824" started-at="2016-08-10T21:57:33Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2016-08-10T21:57:47Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextPrepareTestInstance -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:org.octopus.dashboard.SampleTestNGApplicationTests@3aa078fd]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="1" started-at="2016-08-10T21:57:47Z" finished-at="2016-08-10T21:57:47Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void org.octopus.dashboard.SampleTestNGApplicationTests.testHome() throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="FAIL" signature="testHome()[pri:0, instance:org.octopus.dashboard.SampleTestNGApplicationTests@3aa078fd]" name="testHome" duration-ms="269" started-at="2016-08-10T21:57:47Z" finished-at="2016-08-10T21:57:48Z">
+          <exception class="org.junit.ComparisonFailure">
+            <message>
+              <![CDATA[expected:<"[Hello World]"> but was:<"[home]">]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.junit.ComparisonFailure: expected:<"[Hello World]"> but was:<"[home]">
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at org.octopus.dashboard.SampleTestNGApplicationTests.testHome(SampleTestNGApplicationTests.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.MethodInvocationHelper$1.runTestMethod(MethodInvocationHelper.java:196)
+	at org.springframework.test.context.testng.AbstractTestNGSpringContextTests.run(AbstractTestNGSpringContextTests.java:175)
+	at org.testng.internal.MethodInvocationHelper.invokeHookable(MethodInvocationHelper.java:208)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:635)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:816)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1124)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:774)
+	at org.testng.TestRunner.run(TestRunner.java:624)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:359)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:354)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:312)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:126)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:152)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:57)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.junit.ComparisonFailure -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testHome -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:org.octopus.dashboard.SampleTestNGApplicationTests@3aa078fd]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="1" started-at="2016-08-10T21:57:48Z" finished-at="2016-08-10T21:57:48Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void org.octopus.dashboard.SampleTestNGApplicationTests.testHome() throws java.lang.Exception]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextAfterTestClass()[pri:0, instance:org.octopus.dashboard.SampleTestNGApplicationTests@3aa078fd]" name="springTestContextAfterTestClass" is-config="true" duration-ms="180" started-at="2016-08-10T21:57:48Z" finished-at="2016-08-10T21:57:48Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestClass -->
+      </class> <!-- org.octopus.dashboard.SampleTestNGApplicationTests -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
