@@ -34,3 +34,7 @@ read"}
 
 #curl -H "Content-Type: application/json" -H "Authorization: bearer e08ab2b7-f7e7-42cb-a2a3-541b064b27d7" --data '{}' http://localhost:8080/api/users
 curl -H "Content-Type: application/json" -H "Authorization: bearer e08ab2b7-f7e7-42cb-a2a3-541b064b27d7"  http://localhost:8080/api/users
+
+curl -H "Content-Type: application/json" -H "Authorization: bearer 91af5423-82b0-456f-a4be-dc4a34858bd3"  http://localhost:8080/api/rest/employee
+curl -H "Content-Type: application/json" -H "Authorization: bearer 91af5423-82b0-456f-a4be-dc4a34858bd3" -X POST -d "{"""name""":"""Jonathan1""","""empType""":null,"""empGrade""":null}" http://localhost:8080/api/rest/employee
+curl -H "Content-Type: application/json" -H "Authorization: bearer 91af5423-82b0-456f-a4be-dc4a34858bd3"  http://localhost:8080/api/rest/employee/page?page.size=1"&"page=4

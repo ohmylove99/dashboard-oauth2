@@ -21,3 +21,8 @@ insert into user_role(user_id, role_id) values (1,1);
 insert into user_role(user_id, role_id) values (1,2);
 insert into user_role(user_id, role_id) values (2,1);
 insert into user_role(user_id, role_id) values (3,1);
+
+insert into employee(id,name,emp_type, emp_grade) values (1,'Jason',6,5);
+insert into employee(id,name,emp_type) values (2,'Peter',6);
+insert into employee(id,name,emp_grade) values (3,'Ive',5);
+insert into employee(id,name) values (4,'Jonathan');

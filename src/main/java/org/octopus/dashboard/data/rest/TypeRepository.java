@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(collectionResourceRel = "type", path = "type")
+@RepositoryRestResource(collectionResourceRel = "type", path = "api/rest/type")
 interface TypeRepository extends PagingAndSortingRepository<Type, Long> {
 
 	Page<Type> findByGrpIgnoringCase(@Param("grp") String grp, Pageable pageable);

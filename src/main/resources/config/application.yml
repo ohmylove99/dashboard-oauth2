@@ -18,7 +18,7 @@ spring.jpa:
         database: MYSQL
         generate-ddl: true
         hibernate:
-            ddl-auto: none #validate#create-drop#create
+            ddl-auto: create-drop #validate#create-drop#create
         database-platform: org.hibernate.dialect.MySQLDialect
         hibernate.naming.strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy   # Naming strategy fully qualified name.
         show-sql: true # Enable logging of SQL statements.
@@ -27,7 +27,7 @@ spring.jpa:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
-            hibernate.hbm2ddl.auto: validate
+            #hibernate.hbm2ddl.auto: create-drop
 spring.jackson:
     date-format: yyyy-MM-dd HH:mm:ss # Date format string or a fully-qualified date format class name. For instance `yyyy-MM-dd HH:mm:ss`.
     joda-date-time-format: yyyy-MM-dd# Joda date time format string. If not configured, "date-format" will be used as a fallback if it is configured with a format string.
@@ -64,7 +64,7 @@ spring.freemarker:
       prefix:  # Prefix that gets prepended to view names when building a URL.
       request-context-attribute:  # Name of the RequestContext attribute for all views.
       suffix: .ftl # Suffix that gets appended to view names when building a URL.
-      template-loader-path: classpath:/email/ # Comma-separated list of template paths.
+      template-loader-path: classpath:/templates # Comma-separated list of template paths.
       view-names:  # White list of view names that can be resolved.
 
  
