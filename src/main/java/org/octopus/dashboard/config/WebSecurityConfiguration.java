@@ -1,21 +1,34 @@
 package org.octopus.dashboard.config;
 
+import javax.inject.Inject;
+
 import org.octopus.dashboard.service.CustomUserDetailsService;
+import org.octopus.dashboard.shared.security.AjaxLogoutSuccessHandler;
+import org.octopus.dashboard.shared.security.AuthoritiesConstants;
+import org.octopus.dashboard.shared.security.CustomAccessDeniedHandler;
 import org.octopus.dashboard.shared.security.CustomPasswordEncoder;
+import org.octopus.dashboard.shared.security.Http401UnauthorizedEntryPoint;
+import org.octopus.dashboard.shared.web.filter.CsrfCookieGeneratorFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private static final Logger logger = LoggerFactory
 			.getLogger(WebSecurityConfiguration.class);
@@ -27,40 +40,68 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
+	/*@Inject
+	private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;*/
+
+	@Inject
+	private Http401UnauthorizedEntryPoint authenticationEntryPoint;
+
+	/*@Inject
+	private RememberMeServices rememberMeServices;*/
+
+	@Inject
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**")
+				.antMatchers("/app/**/*.{js,html}").antMatchers("/bower_components/**")
+				.antMatchers("/i18n/**").antMatchers("/content/**")
+				.antMatchers("/swagger-ui/index.html").antMatchers("/test/**")
+				.antMatchers("/h2-console/**");
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().and()
+				.addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
+				.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+				.authenticationEntryPoint(authenticationEntryPoint).and()//.rememberMe()
+				//.rememberMeServices(rememberMeServices).rememberMeParameter("remember-me")
+				//.key("e58712ba8fd46fa7089fe9f5085d8d374b53ffb2").and().
+				.formLogin()
+				.loginProcessingUrl("/api/authentication")
+				// .successHandler(ajaxAuthenticationSuccessHandler)
+				// .failureHandler(ajaxAuthenticationFailureHandler)
+				.usernameParameter("j_username").passwordParameter("j_password")
+				.permitAll().and().logout().logoutUrl("/api/logout")
+				//.logoutSuccessHandler(ajaxLogoutSuccessHandler)
+				.deleteCookies("JSESSIONID", "CSRF-TOKEN").permitAll().and().headers()
+				.frameOptions().disable().and().authorizeRequests()
+				.antMatchers("/api/register").permitAll().antMatchers("/api/activate")
+				.permitAll().antMatchers("/api/authenticate").permitAll()
+				.antMatchers("/api/account/reset_password/init").permitAll()
+				.antMatchers("/api/account/reset_password/finish").permitAll()
+				.antMatchers("/api/profile-info").permitAll().antMatchers("/api/**")
+				.authenticated().antMatchers("/management/**")
+				.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/v2/api-docs/**")
+				.permitAll().antMatchers("/swagger-resources/configuration/ui")
+				.permitAll().antMatchers("/swagger-ui/index.html")
+				.hasAuthority(AuthoritiesConstants.ADMIN);
+
+	}
+
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) {
-		try {
-			auth.inMemoryAuthentication().withUser("user") // #1
-					.password("password").roles("USER").and().withUser("admin") // #2
-					.password("password").roles("ADMIN", "USER");
-		}
-		catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-	}
-
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**", "/index", "/user/**", "/about"); // #3
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		//http.authorizeRequests().antMatchers("/configuration/**","/swagger**","/webjars/**","/v2/**").permitAll();
-		http.authorizeRequests().antMatchers("/signup", "/about").permitAll() // #4
-				.antMatchers("/admin/**").hasRole("ADMIN") // #6
-				.antMatchers("/oauth/**").permitAll().anyRequest().authenticated() // 7
-				.and().formLogin() // #8
-				.failureUrl("/login?error") // #9
-				.and().logout().logoutUrl("/logout").logoutSuccessUrl("/login").and()
-				// .csrf().and()
-				.csrf().disable().rememberMe(); // #5
+	@Bean
+	public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+		return new SecurityEvaluationContextExtension();
 	}
 
 	@Bean

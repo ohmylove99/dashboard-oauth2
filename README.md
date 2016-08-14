@@ -30,3 +30,7 @@ http://localhost:8080/reverse?input=a
 curl localhost:8080/oauth/token -d "grant_type=password&scope=read&username=user&password=spring" -u clientapp:123456
 {"access_token":"96de54f9-46cf-43dd-9217-5f584a28739f","token_type":"bearer","refresh_token":"f60bd8b9-84b2-4c97-8c7f-042ff8f59fa8"expires_in":43199,"scope":"
 read"}
+
+
+#curl -H "Content-Type: application/json" -H "Authorization: bearer e08ab2b7-f7e7-42cb-a2a3-541b064b27d7" --data '{}' http://localhost:8080/api/users
+curl -H "Content-Type: application/json" -H "Authorization: bearer e08ab2b7-f7e7-42cb-a2a3-541b064b27d7"  http://localhost:8080/api/users
