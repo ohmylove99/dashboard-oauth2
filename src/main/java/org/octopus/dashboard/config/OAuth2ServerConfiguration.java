@@ -6,22 +6,21 @@ import javax.sql.DataSource;
 import org.octopus.dashboard.service.CustomUserDetailsService;
 import org.octopus.dashboard.shared.security.AjaxLogoutSuccessHandler;
 import org.octopus.dashboard.shared.security.AuthoritiesConstants;
+import org.octopus.dashboard.shared.security.CustomPasswordEncoder;
 import org.octopus.dashboard.shared.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
@@ -32,11 +31,13 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration
+//@Configuration
+//@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
 public class OAuth2ServerConfiguration {
 
-	@Configuration
-	@EnableResourceServer
+	//@Configuration
+	//@EnableResourceServer
+	//@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
 	protected static class ResourceServerConfiguration
 			extends ResourceServerConfigurerAdapter {
 
@@ -48,39 +49,42 @@ public class OAuth2ServerConfiguration {
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
+			//@formatter:off
 			http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
-					.and().logout().logoutUrl("/api/logout")
-					.logoutSuccessHandler(ajaxLogoutSuccessHandler).and().csrf()
-					.requireCsrfProtectionMatcher(
-							new AntPathRequestMatcher("/oauth/authorize"))
-					.disable().headers().frameOptions().disable().and()
+				.and()
+					.logout().logoutUrl("/api/logout")
+					.logoutSuccessHandler(ajaxLogoutSuccessHandler)
+				.and()
+					.csrf()
+					.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize")).disable().headers().frameOptions().disable()
+				.and()
 					.sessionManagement()
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
 					.authorizeRequests().antMatchers("/api/authenticate").permitAll()
-					.antMatchers("/api/register").permitAll().antMatchers("/api/logs/**")
-					.hasAnyAuthority(AuthoritiesConstants.ADMIN).antMatchers("/api/**")
-					.authenticated().antMatchers("/metrics/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/health/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/trace/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/dump/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/shutdown/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/beans/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN)
-					.antMatchers("/configprops/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/info/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN)
-					.antMatchers("/autoconfig/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/env/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/trace/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/api-docs/**")
-					.hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/protected/**")
-					.authenticated();
-
+					.antMatchers("/api/register").permitAll()
+					.antMatchers("/api/logs/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/api/**").authenticated()
+					.antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/dump/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/shutdown/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/beans/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/configprops/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/info/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/autoconfig/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/env/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+					.antMatchers("/protected/**").authenticated();
+			//@formatter:on
 		}
 	}
 
-	@Configuration
-	@EnableAuthorizationServer
+	//@Configuration
+	//@EnableAuthorizationServer
+	//@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
 	protected static class AuthorizationServerConfiguration
 			extends AuthorizationServerConfigurerAdapter implements EnvironmentAware {
 		private TokenStore tokenStore = new InMemoryTokenStore();
@@ -94,6 +98,11 @@ public class OAuth2ServerConfiguration {
 		@Inject
 		@Qualifier("authenticationManagerBean")
 		private AuthenticationManager authenticationManager;
+		
+		@Inject
+		@Qualifier("passwordEncoder")
+		private PasswordEncoder passwordEncoder;
+		
 		@Autowired
 		private CustomUserDetailsService userDetailsService;
 
@@ -111,14 +120,15 @@ public class OAuth2ServerConfiguration {
 
 		@Override
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+			//@formatter:off
 			clients.inMemory()
 					.withClient(propertyResolver.getProperty(PROP_CLIENTID))
 					.scopes("read", "write")
 					.authorities(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
 					.authorizedGrantTypes("password", "refresh_token")
 					.secret(propertyResolver.getProperty(PROP_SECRET))
-					.accessTokenValiditySeconds(propertyResolver.getProperty(
-							PROP_TOKEN_VALIDITY_SECONDS, Integer.class, 1800));
+					.accessTokenValiditySeconds(propertyResolver.getProperty(PROP_TOKEN_VALIDITY_SECONDS, Integer.class, 1800));
+			//@formatter:on
 		}
 
 		@Override
@@ -145,5 +155,4 @@ public class OAuth2ServerConfiguration {
 			return new JdbcAuthorizationCodeServices(dataSource);
 		}
 	}
-
 }

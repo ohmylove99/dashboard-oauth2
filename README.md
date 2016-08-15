@@ -1,3 +1,7 @@
+[![build status](https://secure.travis-ci.org/survivejs/react.png)](http://travis-ci.org/survivejs/react) [![Join the chat at https://gitter.im/survivejs/react](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/survivejs/react)
+
+# Dashboard Spring Boot Sample
+
 http://localhost:8080/api/rest/greeting
 
 http://localhost:8080/api/rest/hello

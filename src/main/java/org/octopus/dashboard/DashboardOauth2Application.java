@@ -31,12 +31,27 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableConfigurationProperties({ AppProperties.class })
 public class DashboardOauth2Application extends SpringBootServletInitializer {
+	/**
+	 * Main method, used to run the application.
+	 */
+	public static void main(String[] args) throws UnknownHostException {
+		SpringApplication app = new SpringApplication(DashboardOauth2Application.class);
+		SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(
+				args);
+		addDefaultProfile(app, source);
+		Environment env = app.run(args).getEnvironment();
+		log.info(
+				"Access URLs:\n----------------------------------------------------------\n\t"
+						+ "Local: \t\thttp://127.0.0.1:{}\n\t"
+						+ "External: \thttp://{}:{}\n----------------------------------------------------------",
+				env.getProperty("server.port"),
+				InetAddress.getLocalHost().getHostAddress(),
+				env.getProperty("server.port"));
+
+	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		/**
-		 * set a default to use when no profile is configured.
-		 */
 		DefaultProfileUtil.addDefaultProfile(application.application());
 		return application.sources(DashboardOauth2Application.class);
 	}
@@ -47,17 +62,6 @@ public class DashboardOauth2Application extends SpringBootServletInitializer {
 	@Inject
 	private Environment env;
 
-	/**
-	 * Initializes menuber.
-	 * <p/>
-	 * Spring profiles can be configured with a program arguments
-	 * --spring.profiles.active=your-active-profile
-	 * <p/>
-	 * <p>
-	 * You can find more information on how profiles work with JHipster on <a href=
-	 * "http://jhipster.github.io/profiles.html">http://jhipster.github.io/profiles.html</a>.
-	 * </p>
-	 */
 	@PostConstruct
 	public void initApplication() throws IOException {
 		if (env.getActiveProfiles().length == 0) {
@@ -81,33 +85,10 @@ public class DashboardOauth2Application extends SpringBootServletInitializer {
 		}
 	}
 
-	/**
-	 * Main method, used to run the application.
-	 */
-	public static void main(String[] args) throws UnknownHostException {
-		SpringApplication app = new SpringApplication(DashboardOauth2Application.class);
-		SimpleCommandLinePropertySource source = new SimpleCommandLinePropertySource(
-				args);
-		addDefaultProfile(app, source);
-		Environment env = app.run(args).getEnvironment();
-		log.info(
-				"Access URLs:\n----------------------------------------------------------\n\t"
-						+ "Local: \t\thttp://127.0.0.1:{}\n\t"
-						+ "External: \thttp://{}:{}\n----------------------------------------------------------",
-				env.getProperty("server.port"),
-				InetAddress.getLocalHost().getHostAddress(),
-				env.getProperty("server.port"));
-
-	}
-
-	/**
-	 * If no profile has been configured, set by default the "dev" profile.
-	 */
 	private static void addDefaultProfile(SpringApplication app,
 			SimpleCommandLinePropertySource source) {
 		if (!source.containsProperty("spring.profiles.active")
 				&& !System.getenv().containsKey("SPRING_PROFILES_ACTIVE")) {
-
 			app.setAdditionalProfiles(ConfigConstants.SPRING_PROFILE_DEVELOPMENT);
 		}
 	}

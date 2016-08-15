@@ -21,10 +21,9 @@ public class GreetingRestEndPoint {
 
 	private final AtomicLong counter = new AtomicLong();
 
-	@RequestMapping(value = "/greeting", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/rest/greeting", method = RequestMethod.GET)
 	public Map<Long, String> greeting(@AuthenticationPrincipal User user) {
 		return Collections.singletonMap(counter.incrementAndGet(),
 				String.format(template, user.getName()));
 	}
-
 }

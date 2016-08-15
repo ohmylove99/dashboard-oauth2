@@ -6,10 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeRestEndPoint {
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "home";
 	}
-
 }
