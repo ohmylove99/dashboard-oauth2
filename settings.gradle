@@ -1,0 +1,9 @@
+rootProject.name = 'dashboard-oauth2'
+
+include ':common'
+include ':api'
+include ':web'
+
+project(':common').projectDir = "$rootDir/dashboard-common" as File
+project(':api').projectDir = "$rootDir/dashboard-api" as File
+project(':web').projectDir = "$rootDir/dashboard-web" as File
