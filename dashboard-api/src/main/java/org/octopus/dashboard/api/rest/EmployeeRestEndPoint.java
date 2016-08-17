@@ -3,9 +3,16 @@ package org.octopus.dashboard.api.rest;
 import java.net.URI;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.loader.api.BeanMappingBuilder;
+import org.dozer.loader.api.TypeMappingOptions;
+import org.octopus.dashboard.data.dto.EmployeeDto;
 import org.octopus.dashboard.data.entity.Employee;
+import org.octopus.dashboard.data.entity.EmployeeEntity;
 import org.octopus.dashboard.service.EmployeeService;
+import org.octopus.dashboard.service.TypeService;
 import org.octopus.dashboard.shared.constants.MediaTypes;
+import org.octopus.dashboard.shared.data.entity.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +38,23 @@ public class EmployeeRestEndPoint {
 	@Autowired
 	private EmployeeService service;
 
+	@Autowired
+	private TypeService typeService;
+
 	private static final String PAGE_SIZE = "3";
 
 	@RequestMapping(value = "/api/rest/employee", method = RequestMethod.GET)
 	public List<Employee> getAll() {
 		return service.getAll();
+	}
+
+	@RequestMapping(value = "/api/rest/employeeByName", method = RequestMethod.GET)
+	public EmployeeDto getEmployee(@RequestParam(value = "name") String name) {
+		EmployeeEntity entity = service.findByName(name);
+		EmployeeDto dto = new EmployeeDto();
+
+		mapEntityToDto(entity, dto);
+		return dto;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -72,5 +91,22 @@ public class EmployeeRestEndPoint {
 			sort = new Sort(Direction.ASC, "name");
 		}
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
+	}
+
+	private void mapEntityToDto(EmployeeEntity entity, EmployeeDto dto) {
+		DozerBeanMapper dozer = new DozerBeanMapper();
+		BeanMappingBuilder builder = new BeanMappingBuilder() {
+			protected void configure() {
+				mapping(EmployeeEntity.class, EmployeeDto.class,
+						TypeMappingOptions.oneWay()).exclude("empGrade")
+								.exclude("empType");
+			}
+		};
+		dozer.addMapping(builder);
+		dozer.map(entity, dto);
+		Type empType = typeService.findOne(entity.getEmpType());
+		Type empGrade = typeService.findOne(entity.getEmpGrade());
+		dto.setEmpType(empType);
+		dto.setEmpGrade(empGrade);
 	}
 }

@@ -1,6 +1,9 @@
 package org.octopus.dashboard.config;
 
-public class ConfigConstants {
+import org.octopus.dashboard.shared.security.AuthoritiesConstants;
+
+public class ConfigConstants extends AuthoritiesConstants {
+
 	public static final String SPRING_PROFILE_LOCAL = "local";
 	public static final String SPRING_PROFILE_DEVELOPMENT = "dev";
 	public static final String SPRING_PROFILE_PRODUCTION = "prod";
@@ -8,6 +11,6 @@ public class ConfigConstants {
 
 	public static final String SYSTEM_ACCOUNT = "system";
 
-	private ConfigConstants() {
+	protected ConfigConstants() {
 	}
 }

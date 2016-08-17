@@ -1,20 +1,16 @@
 package org.octopus.dashboard.data.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.octopus.dashboard.shared.data.entity.Type;
 
 @Entity
-@Table(name = "ss_employee")
-public class Employee {
+@Table(name = "ss_employee2")
+public class EmployeeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -22,13 +18,9 @@ public class Employee {
 	@NotEmpty
 	private String name;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "EMP_TYPE")
-	private Type empType;
+	private Long empType;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "EMP_GRADE")
-	private Type empGrade;
+	private Long empGrade;
 
 	public Long getId() {
 		return id;
@@ -46,19 +38,19 @@ public class Employee {
 		this.name = name;
 	}
 
-	public Type getEmpType() {
+	public Long getEmpType() {
 		return empType;
 	}
 
-	public void setEmpType(Type empType) {
+	public void setEmpType(Long empType) {
 		this.empType = empType;
 	}
 
-	public Type getEmpGrade() {
+	public Long getEmpGrade() {
 		return empGrade;
 	}
 
-	public void setEmpGrade(Type empGrade) {
+	public void setEmpGrade(Long empGrade) {
 		this.empGrade = empGrade;
 	}
 }

@@ -7,9 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class CustomPasswordEncoder implements PasswordEncoder {
 	private final Log logger = LogFactory.getLog(getClass());
+
 	public String encode(CharSequence rawPassword) {
 		return PasswordUtils.hashPassword(rawPassword.toString());
-		//return rawPassword.toString();
 	}
 
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
@@ -21,8 +21,8 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 			logger.warn("Empty raw Password");
 			return false;
 		}
-		return encodedPassword.toString().equals( PasswordUtils.hashPassword(rawPassword.toString()));
-		//return rawPassword.toString().equals(encodedPassword);
+		return encodedPassword.toString()
+				.equals(PasswordUtils.hashPassword(rawPassword.toString()));
 	}
 
 	public CustomPasswordEncoder() {

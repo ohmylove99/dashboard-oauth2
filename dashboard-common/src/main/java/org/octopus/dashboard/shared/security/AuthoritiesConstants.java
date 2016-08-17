@@ -1,7 +1,7 @@
 package org.octopus.dashboard.shared.security;
 
 public class AuthoritiesConstants {
-	private AuthoritiesConstants() {
+	protected AuthoritiesConstants() {
 	}
 
 	public static final String ADMIN = "ROLE_ADMIN";

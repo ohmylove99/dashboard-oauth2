@@ -2,8 +2,8 @@ package org.octopus.dashboard.service;
 
 import java.util.Collection;
 
-import org.octopus.dashboard.data.entity.User;
-import org.octopus.dashboard.data.repository.UserRepository;
+import org.octopus.dashboard.shared.data.entity.User;
+import org.octopus.dashboard.shared.data.rest.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,15 +22,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
 		User user = userRepository.findByLoginName(username);
 		if (user == null) {
-			throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
+			throw new UsernameNotFoundException(
+					String.format("User %s does not exist!", username));
 		}
 		return new UserRepositoryUserDetails(user);
 	}
 
-	private final static class UserRepositoryUserDetails extends User implements UserDetails {
+	private final static class UserRepositoryUserDetails extends User
+			implements UserDetails {
 
 		private static final long serialVersionUID = 1L;
 
@@ -67,7 +70,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 		public boolean isEnabled() {
 			return true;
 		}
-
 	}
-
 }

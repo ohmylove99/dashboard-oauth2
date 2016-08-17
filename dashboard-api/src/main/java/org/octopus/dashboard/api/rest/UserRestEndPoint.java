@@ -7,10 +7,10 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import org.octopus.dashboard.OAuthConstants;
-import org.octopus.dashboard.data.entity.User;
-import org.octopus.dashboard.data.repository.UserRepository;
+import org.octopus.dashboard.Constants;
 import org.octopus.dashboard.service.UserMailService;
+import org.octopus.dashboard.shared.data.entity.User;
+import org.octopus.dashboard.shared.data.rest.UserRepository;
 import org.octopus.dashboard.shared.security.AuthoritiesConstants;
 import org.octopus.dashboard.shared.web.rest.util.HeaderUtil;
 import org.octopus.dashboard.shared.web.rest.util.PaginationUtil;
@@ -74,7 +74,7 @@ public class UserRestEndPoint {
 		}
 	}
 
-	@RequestMapping(value = "/users/{login:" + OAuthConstants.LOGIN_REGEX
+	@RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX
 			+ "}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@Secured(AuthoritiesConstants.ADMIN)
