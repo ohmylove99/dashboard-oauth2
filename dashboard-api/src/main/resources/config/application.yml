@@ -90,8 +90,13 @@ security:
     basic:
         enabled: false
 
-management:
-  port: 8082
+#management:
+#  port: 8082
+  #security.enabled: false
+#  context-path: /manage
+#  security: 
+#     enabled: true
+#     roles: ADMIN
 
 spring.cache.jcache.config: ehcache3.xml
 

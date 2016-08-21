@@ -10,6 +10,7 @@ public class AppProperties {
 	private final CorsConfiguration cors = new CorsConfiguration();
 	private final Security security = new Security();
 	private final Swagger swagger = new Swagger();
+	private final Upload upload = new Upload();
 
 	public CorsConfiguration getCors() {
 		return cors;
@@ -23,7 +24,35 @@ public class AppProperties {
 		return swagger;
 	}
 
+	public Upload getUpload() {
+		return upload;
+	}
+
 	public static class Async {
+
+	}
+
+	public static class Upload {
+
+		private String uploadPath = "upload";
+
+		private String downloadPath = "download";
+
+		public String getUploadPath() {
+			return uploadPath;
+		}
+
+		public void setUploadPath(String uploadPath) {
+			this.uploadPath = uploadPath;
+		}
+
+		public String getDownloadPath() {
+			return downloadPath;
+		}
+
+		public void setDownloadPath(String downloadPath) {
+			this.downloadPath = downloadPath;
+		}
 
 	}
 

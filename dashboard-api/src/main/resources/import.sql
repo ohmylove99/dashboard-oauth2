@@ -10,10 +10,10 @@ insert into ss_type(id,grp,name,detail) values(9,'COMSITE','DL', 'Da Lian');
 insert into ss_type(id,grp,name,detail) values(10,'COMSITE','GZ', 'Guang Zhou');
 
 insert into ss_user(id, name, login_name, password) values (1,'Admin','admin','JIkCExpzJiiu9uKHKCfbEN98B78=');
-insert into ss_user(id, name, login_name, password) values (2,'ss_user','ss_user','JIkCExpzJiiu9uKHKCfbEN98B78=');
+insert into ss_user(id, name, login_name, password) values (2,'User','user','JIkCExpzJiiu9uKHKCfbEN98B78=');
 insert into ss_user(id, name, login_name, password) values (3,'Guest','guest','JIkCExpzJiiu9uKHKCfbEN98B78=');
  
-insert into ss_role(id, name) values (1,'ss_user');
+insert into ss_role(id, name) values (1,'USER');
 insert into ss_role(id, name) values (2,'ADMIN');
 insert into ss_role(id, name) values (3,'GUEST'); 
 

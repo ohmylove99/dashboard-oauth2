@@ -23,12 +23,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.csrf.CsrfFilter;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Profile("!" + ConfigConstants.SPRING_PROFILE_DEVELOPMENT)
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-	@Inject
+
+public class WebSecurityConfiguration {}
+//@Configuration
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+//public class WebSecurityConfiguration {}//{//extends WebSecurityConfigurerAdapter {
+	/*@Inject
 	private AppProperties appProperties;
 
 	@Autowired
@@ -53,15 +54,24 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		web.ignoring()
 				.antMatchers(HttpMethod.OPTIONS, "/**")
 				.antMatchers("/resources/**")
-				.antMatchers("/app/**/*.{js,html}")
-				.antMatchers("/bower_components/**")
-				.antMatchers("/i18n/**")
+				//.antMatchers("/app/**.{js,html}")
+*/				//.antMatchers("/bower_components/**")
+				/*.antMatchers("/i18n/**")
 				.antMatchers("/content/**")
-				.antMatchers("/swagger-ui/index.html")
+				.antMatchers("/swagger-ui/index.html");
+				.antMatchers("/metrics/**")
+				.antMatchers("/health/**")
+				.antMatchers("/trace/**")
+				.antMatchers("/dump/**")
+				.antMatchers("/beans/**")
+				.antMatchers("/configprops/**")
+				.antMatchers("/info/**")
+				.antMatchers("/autoconfig/**")
+				.antMatchers("/env/**")
 				.antMatchers("/test/**");
 		//@formatter:on
-	}
-
+	}*/
+/*
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
@@ -80,6 +90,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		        .rememberMe()
 		        .rememberMeParameter("remember-me")
 		        .key(appProperties.getSecurity().getRememberme().getKey())
+		    .and().requestMatchers().requestMatchers(request -> "/manage".equals(request.getContextPath()))
+                .and().authorizeRequests().anyRequest().hasRole("ADMIN").and().httpBasic()
 		    .and()
 		        .formLogin()
 		        .loginPage("/login")
@@ -120,7 +132,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	@Bean
-	@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
@@ -133,5 +144,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CustomPasswordEncoder passwordEncoder() {
 		return new CustomPasswordEncoder();
-	}
-}
+	}*/
+//}

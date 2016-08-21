@@ -67,7 +67,10 @@ dependencies {
     }
     //compile('com.fasterxml.jackson.datatype:jackson-datatype-joda')
     compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
-    
+    compile('org.springframework.security:spring-security-jwt:1.0.5.RELEASE'){
+		exclude(module: 'org.bouncycastle')
+    }
+    compile('commons-io:commons-io:2.5')
 	compile('org.apache.commons:commons-lang3:3.4')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

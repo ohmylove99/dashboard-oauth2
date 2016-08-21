@@ -4,15 +4,14 @@ import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.octopus.dashboard.service.CustomUserDetailsService;
-import org.octopus.dashboard.shared.security.AjaxLogoutSuccessHandler;
 import org.octopus.dashboard.shared.security.AuthoritiesConstants;
-import org.octopus.dashboard.shared.security.CustomPasswordEncoder;
 import org.octopus.dashboard.shared.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +20,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
@@ -32,20 +33,15 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 //@Configuration
-//@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
 public class OAuth2ServerConfiguration {
 
-	//@Configuration
-	//@EnableResourceServer
-	//@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
+	/*@Configuration
+	@EnableResourceServer
 	protected static class ResourceServerConfiguration
 			extends ResourceServerConfigurerAdapter {
 
 		@Inject
 		private Http401UnauthorizedEntryPoint authenticationEntryPoint;
-
-		@Inject
-		private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
@@ -53,7 +49,6 @@ public class OAuth2ServerConfiguration {
 			http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
 				.and()
 					.logout().logoutUrl("/api/logout")
-					.logoutSuccessHandler(ajaxLogoutSuccessHandler)
 				.and()
 					.csrf()
 					.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize")).disable().headers().frameOptions().disable()
@@ -82,9 +77,8 @@ public class OAuth2ServerConfiguration {
 		}
 	}
 
-	//@Configuration
-	//@EnableAuthorizationServer
-	//@Profile("!" + ConfigConstants.SPRING_PROFILE_LOCAL)
+	@Configuration
+	@EnableAuthorizationServer
 	protected static class AuthorizationServerConfiguration
 			extends AuthorizationServerConfigurerAdapter implements EnvironmentAware {
 		private TokenStore tokenStore = new InMemoryTokenStore();
@@ -98,11 +92,11 @@ public class OAuth2ServerConfiguration {
 		@Inject
 		@Qualifier("authenticationManagerBean")
 		private AuthenticationManager authenticationManager;
-		
+
 		@Inject
 		@Qualifier("passwordEncoder")
 		private PasswordEncoder passwordEncoder;
-		
+
 		@Autowired
 		private CustomUserDetailsService userDetailsService;
 
@@ -154,5 +148,5 @@ public class OAuth2ServerConfiguration {
 		protected AuthorizationCodeServices authorizationCodeServices() {
 			return new JdbcAuthorizationCodeServices(dataSource);
 		}
-	}
+	}*/
 }
