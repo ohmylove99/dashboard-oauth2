@@ -1,8 +1,7 @@
-package org.octopus.dashboard.config;
+package org.octopus.dashboard.config.web;
 
 import javax.inject.Inject;
 
-import org.octopus.dashboard.service.CustomUserDetailsService;
 import org.octopus.dashboard.shared.security.AuthoritiesConstants;
 import org.octopus.dashboard.shared.security.CustomAccessDeniedHandler;
 import org.octopus.dashboard.shared.security.CustomPasswordEncoder;

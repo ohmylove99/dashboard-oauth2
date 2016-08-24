@@ -1,4 +1,4 @@
-package org.octopus.dashboard.config;
+package org.octopus.dashboard.config.oauth2;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 

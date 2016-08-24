@@ -1,39 +1,155 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Static</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/3.0.3/css/bootstrap.min.css" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/oauth2/store.min.js"></script>
+<script type="text/javascript" src="js/oauth2/Base64.js"></script>
+<!--<script type="text/javascript" src="js/oauth2/jquery.oauth.min.js"></script>-->
+<script type="text/javascript" src="js/oauth2.js"></script>
+<!-- <script type="text/javascript" src="js/oauth2/oauth2.js"></script> -->
+
+<script>
+	//var csrfToken = $("input[name='_token']").val();	
+	var clientID = 'clientIdPassword';
+	var clientSecret = 'secret';
+	var authorizeEndpoint = 'http://localhost:8080/oauth/authorize'
+	var tokenEndpoint = 'http://localhost:8080/oauth/token';
+
+	var CLIENT_ID = 'clientapp';
+	var CLIENT_SECRET = '123456';
+	var TOKEN_URL = 'http://localhost:9080/oauth/token';
+	var USER_NAME = 'user';
+	var PASS_WORD = 'spring';
+	
+	var Base64_HEADER = Base64.encode(CLIENT_ID+':'+CLIENT_SECRET);
+	
+	/*$.ajax({
+		   url: tokenEndpoint,
+		   method: "POST",
+		   data: {
+		       username: USER_NAME,
+		       password: PASS_WORD,
+		       grant_type: 'password',
+		       scope: 'read'
+		   },
+		   beforeSend: function (xhr){ 
+		        xhr.setRequestHeader('Authorization', 'Basic '+Base64_HEADER); 
+		    },
+		   statusCode: {
+		       200: function(response) {
+		    	   alert('');
+		           auth.login(response.access_token, response.expires_in);
+		       },
+		       401: function() {
+		           alert("The username or password were not correct. Try again.");
+		       }
+		   }
+		});*/
+	
+	// Initialize library
+	/*var auth = new jqOAuth({
+		//csrfToken: "token", //CSRF token,
+		clientID : clientID,
+		clientSecret : clientSecret,
+		authorizeEndpoint : authorizeEndpoint,
+		tokenEndpoint : tokenEndpoint,
+		events : {
+			logout : function() {
+				alert('logout');
+			},
+			login : function() {
+				alert('login');
+			},
+			tokenExpiration : function() {
+				alert('tokenExpiration');
+			}
+		}
+	});
+
+	auth.login();*/
+	var xhr = new oauth.OAuth2XMLHttpRequest({
+	    authorizeEndpoint: authorizeEndpoint,
+	    tokenEndpoint: tokenEndpoint,
+	    clientID: CLIENT_ID,
+	    clientSecret: CLIENT_SECRET,
+	    localStoragePrefix: "oauth2.example.", // Used for storing credentials in localStorage
+	    requestAuthorization: function(callback) {
+	        /* This function will be called if the user is required to visit the *
+	         * remote web service to authorize the application. If the user      *
+	         * consents, call callback() to open a pop-up window.                */
+
+	        // Let's use the jQuery UI dialog (http://jqueryui.com/dialog/)
+	        $('#dialog-authorize').dialog({
+	            resizable: false,
+	            width: 500,
+	            modal: true,
+	            buttons: {
+	                "Proceed": function() {
+	                    $(this).dialog("close");
+	                    callback();
+	                },
+	                "Cancel": function() {
+	                    $(this).dialog("close");
+	                }
+	            }
+	        });
+	    }
+	});
+
+	xhr.onreadystatechange = function() {
+	   // get something
+	   alert('a');
+	};
+	xhr.open('GET', 'https://example.com/protected-resource');
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhr.send('param=value&otherparam=othervalue');
+</script>
+<style>
+body {
+	background-color: white;
+	font-family: Arial;
+	margin: 0
+}
+
+.content {
+	padding: 0 20px
+}
+
+.button {
+	text-align: center;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid #777;
+	background-color: #ddd
+}
+
+h1 {
+	text-align: center
+}
+
+p.success {
+	background-color: #efe;
+	padding: 5px
+}
+
+p.error {
+	background-color: #fee;
+	padding: 5px
+}
+</style>
+<title>Oauth2 Cordova XDK</title>
 </head>
 <body>
-	<script type="text/javascript"
-		src="webjars/jquery/2.0.3/jquery.min.js"></script>
-	<div id="navbar" class="navbar navbar-default" role="navigation">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target=".navbar-collapse">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand"
-				href="https://github.com/spring-projects/spring-boot"> Spring Boot
-			</a>
-		</div>
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li><a href="./"> Home </a></li>
-			</ul>
-		</div>
-	</div>
-	<div class="jumbotron">
-		<h1>Home</h1>
-		<p>Some static content</p>
+	<div class="content">
+		<h1>Oauth2</h1>
 		<p>
-          <a class="btn btn-lg btn-primary" href="#navbar" role="button">Go &raquo;</a>
-        </p>
+		<div class="button" onclick="oauth2_login()">Oauth2 Login</div>
+		</p>
+		<div id="logs"></div>
 	</div>
-	<script type="text/javascript"
-		src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>

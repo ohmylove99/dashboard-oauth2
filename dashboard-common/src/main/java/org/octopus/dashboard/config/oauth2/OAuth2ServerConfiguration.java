@@ -1,9 +1,8 @@
-package org.octopus.dashboard.config;
+package org.octopus.dashboard.config.oauth2;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import org.octopus.dashboard.service.CustomUserDetailsService;
 import org.octopus.dashboard.shared.security.AuthoritiesConstants;
 import org.octopus.dashboard.shared.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;

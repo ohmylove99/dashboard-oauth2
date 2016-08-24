@@ -88,7 +88,7 @@ multipart:
 
 security:
     basic:
-        enabled: false
+        enabled: true
 
 #management:
 #  port: 8082
@@ -128,6 +128,7 @@ info:
 
 app:
     security:
+        oauthEnable: true
         rememberMe:
             # security key (this key should be unique for your application, and kept secret)
             key: e48612ba1fd46fa7089fe9f5085d8d164b53ffb2

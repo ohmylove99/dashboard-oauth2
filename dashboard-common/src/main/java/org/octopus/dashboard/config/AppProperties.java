@@ -161,11 +161,19 @@ public class AppProperties {
 	}
 
 	public static class Security {
-
+		private String oauthEnable;
 		private final Rememberme rememberme = new Rememberme();
 
 		public Rememberme getRememberme() {
 			return rememberme;
+		}
+
+		public String getOauthEnable() {
+			return oauthEnable;
+		}
+
+		public void setOauthEnable(String oauthEnable) {
+			this.oauthEnable = oauthEnable;
 		}
 
 		public static class Rememberme {

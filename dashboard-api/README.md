@@ -53,3 +53,6 @@ http://localhost:8082/configprops
 http://localhost:8082/info
 http://localhost:8082/autoconfig
 http://localhost:8082/env
+
+
+curl localhost:9080/oauth/token -d "grant_type=password&scope=read&username=john&password=123" -u fooClientIdPassword:secret
