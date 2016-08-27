@@ -40,7 +40,8 @@ public class SwaggerConfig implements EnvironmentAware {
 
 	@Bean
 	public Docket swaggerSpringfoxDocket() {
-		log.debug("Starting Swagger");
+		if (log.isDebugEnabled())
+			log.debug("Starting Swagger");
 		StopWatch watch = new StopWatch();
 		watch.start();
 		Docket docket = new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
@@ -51,7 +52,7 @@ public class SwaggerConfig implements EnvironmentAware {
 				.directModelSubstitute(java.time.LocalDateTime.class, Date.class).select()
 				.paths(regex(DEFAULT_INCLUDE_PATTERN)).build();
 		watch.stop();
-		log.debug("Started Swagger in {} ms", watch.getTotalTimeMillis());
+		log.info("Started Swagger in {} ms", watch.getTotalTimeMillis());
 		return docket;
 	}
 
