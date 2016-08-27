@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "ss_employee2")
+// This is original table object
 public class EmployeeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -21,8 +21,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.csrf.CsrfFilter;
 
-import net.logstash.logback.encoder.org.apache.commons.lang.BooleanUtils;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -64,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/bower_components/**")
 				.antMatchers("/i18n/**")
 				.antMatchers("/content/**")
-				.antMatchers("/swagger-ui.html")
+				//.antMatchers("/swagger-ui.html")
 				.antMatchers("/metrics/**")
 				.antMatchers("/health/**")
 				.antMatchers("/trace/**")
@@ -132,7 +130,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
 		        .antMatchers("/v2/api-docs/**").permitAll()
 		        .antMatchers("/swagger-resources/configuration/ui").permitAll()
-		        .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
+		        .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+		        .antMatchers("/swagger-ui.html").hasAuthority(AuthoritiesConstants.ADMIN);
 		  //@formatter:on
 	}
 

@@ -8,7 +8,9 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.octopus.dashboard.config.AppProperties;
 import org.octopus.dashboard.config.ConfigConstants;
 import org.octopus.dashboard.profile.DefaultProfileUtil;
@@ -20,6 +22,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
@@ -92,4 +95,14 @@ public class DashboardOauth2Application extends SpringBootServletInitializer {
 			app.setAdditionalProfiles(ConfigConstants.SPRING_PROFILE_DEVELOPMENT);
 		}
 	}
+	
+	@Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        return dataSource;
+    }
 }

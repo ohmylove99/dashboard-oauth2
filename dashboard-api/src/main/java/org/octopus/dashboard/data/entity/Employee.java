@@ -14,6 +14,7 @@ import org.octopus.dashboard.shared.data.entity.Type;
 
 @Entity
 @Table(name = "ss_employee")
+// This is using measure table way
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -14,6 +14,10 @@ spring.datasource:
     username: oauth
     password: oauth
     driver-class-name: com.mysql.jdbc.Driver
+    schema: schema.sql
+    data: import.sql
+    initialize: false
+    continueOnError: true
 spring.jpa:
         database: MYSQL
         generate-ddl: true

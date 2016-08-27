@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.octopus.dashboard.config.ConfigConstants;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -18,7 +16,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("!" + ConfigConstants.SPRING_PROFILE_DEVELOPMENT)
 public class AjaxLogoutSuccessHandler extends
 		AbstractAuthenticationTargetUrlRequestHandler implements LogoutSuccessHandler {
 

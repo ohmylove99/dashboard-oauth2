@@ -1,9 +1,8 @@
 package org.octopus.dashboard.config.oauth2;
 
-import javax.inject.Inject;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.octopus.dashboard.config.AppProperties;
+import org.octopus.dashboard.shared.security.AjaxLogoutSuccessHandler;
 import org.octopus.dashboard.shared.security.AuthoritiesConstants;
 import org.octopus.dashboard.shared.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +18,23 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private Environment env;
+
 	@Autowired
 	private AppProperties appProperties;
 	@Autowired
 	private Http401UnauthorizedEntryPoint authenticationEntryPoint;
+	@Autowired
+	private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
 			.and()
-				.logout().logoutUrl("/api/logout")
+				.logout().logoutUrl("/api/logout").logoutSuccessHandler(ajaxLogoutSuccessHandler)
 			.and()
 				.csrf()
 				.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize")).disable().headers().frameOptions().disable()
@@ -57,7 +60,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 				.antMatchers("/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
 				.antMatchers("/protected/**").authenticated();
 		//@formatter:on
-		// if enableoauth
+		// if enable OAuth
 		if (BooleanUtils.toBoolean(appProperties.getSecurity().getOauthEnable())) {
 			http.authorizeRequests().antMatchers("/api/**").authenticated();
 		}
@@ -65,7 +68,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 			http.authorizeRequests().antMatchers("/api/**").permitAll();
 		}
 	}
-
+	//@formatter:off
 	// Remote token service
 	/*
 	 * @Primary
@@ -78,7 +81,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 	 */
 
 	// JWT token store
-	//@formatter:off
+	
    /* @Override
     public void configure(final ResourceServerSecurityConfigurer config) {
         config.tokenServices(tokenServices());
