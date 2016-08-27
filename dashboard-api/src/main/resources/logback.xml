@@ -61,6 +61,7 @@
 	<logger name="org.springframework.web" level="OFF" />
 	<logger name="org.springframework.security" level="WARN" />
 	<logger name="org.springframework.security.oauth2.provider.endpoint" level="OFF" />
+	<logger name="org.springframework.security.oauth2.provider.authentication" level="OFF" />
 	<logger name="org.springframework.security.web" level="OFF" />
 	<logger name="org.springframework.security.web.access.expression" level="INFO" />
 	<logger name="org.springframework.security.web.access.intercept" level="INFO" />
