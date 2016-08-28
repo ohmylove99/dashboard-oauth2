@@ -34,6 +34,7 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private String loginName;
 
+	@JsonIgnore
 	@NotEmpty
 	private String password;
 

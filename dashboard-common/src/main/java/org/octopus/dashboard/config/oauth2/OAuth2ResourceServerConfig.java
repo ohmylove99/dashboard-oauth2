@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableResourceServer
@@ -35,9 +34,9 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
 			.and()
 				.logout().logoutUrl("/api/logout").logoutSuccessHandler(ajaxLogoutSuccessHandler)
-			.and()
+/*			.and()
 				.csrf()
-				.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize")).disable().headers().frameOptions().disable()
+				.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize")).disable().headers().frameOptions().disable()*/
 			.and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

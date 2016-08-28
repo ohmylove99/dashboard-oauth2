@@ -1,10 +1,6 @@
 /**
  * Singleton used for Namespace
  */
-var CLIENT_ID = 'clientapp';
-var CLIENT_SECRET = '123456';
-var TOKEN_URL = 'http://localhost:8080/oauth/token';
-
 function oauth2() {
   
 }
@@ -104,7 +100,7 @@ oauth2.postAuth = function (url, data, success, error) {
  */
 oauth2.postClientAuth = function (url, data, success, error) {
 
-    var authorization = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(CLIENT_ID + ':' + CLIENT_SECRET));
+    var authorization = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse('353b302c44574f565045687e534e7d6a' + ':' + '286924697e615a672a646a493545646c'));
 
   $.ajax({
     url: url,
@@ -127,7 +123,7 @@ oauth2.postClientAuth = function (url, data, success, error) {
  */
 oauth2.login = function (url, data, success, error) {
 
-  var authorization =  CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(CLIENT_ID + ':' + CLIENT_SECRET));
+  var authorization =  CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse('353b302c44574f565045687e534e7d6a' + ':' + '286924697e615a672a646a493545646c'));
   $.ajax({
     url: url,
     type: "POST",

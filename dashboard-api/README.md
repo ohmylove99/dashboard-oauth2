@@ -36,6 +36,22 @@ curl localhost:8080/oauth/token -d "grant_type=password&scope=read&username=user
 read"}
 
 
+curl -H "Content-Type: application/json" -H "Authorization: bearer 256992ef-1b0d-4541-8677-05dfaf751b5a"  http://localhost:8080/api/rest/employee
+// By Principal => get Roles also
+curl -H "Content-Type: application/json" -H "Authorization: bearer 256992ef-1b0d-4541-8677-05dfaf751b5a"  http://localhost:8080/api/rest/employee1
+// By Request => get UserName only
+curl -H "Content-Type: application/json" -H "Authorization: bearer 256992ef-1b0d-4541-8677-05dfaf751b5a"  http://localhost:8080/api/rest/employee2
+// By ThreadLocal => get Roles also
+curl -H "Content-Type: application/json" -H "Authorization: bearer 256992ef-1b0d-4541-8677-05dfaf751b5a"  http://localhost:8080/api/rest/employee3
+
+curl -H "Content-Type: application/json" -H "Authorization: bearer 60445446-c66a-4d20-bbd0-07230a4002f6"  http://localhost:8080/userinfo
+// Test HasRole Annotation
+curl localhost:8080/oauth/token -d "grant_type=password&scope=read&username=user&password=spring" -u clientapp:123456
+=> {"code":500,"message":"Internal Server Error","error":null}
+=> CustomExceptionHandler       : {"path":"/users","from":"0:0:0:0:0:0:0:1","message":"Access is denied"}
+curl localhost:8080/oauth/token -d "grant_type=password&scope=read&username=admin&password=spring" -u clientapp:123456
+curl -H "Content-Type: application/json" -H "Authorization: bearer baf81d69-3b02-4cd3-a466-48bee52dcd17"  http://localhost:8080/users
+
 #curl -H "Content-Type: application/json" -H "Authorization: bearer e08ab2b7-f7e7-42cb-a2a3-541b064b27d7" --data '{}' http://localhost:8080/api/users
 curl -H "Content-Type: application/json" -H "Authorization: bearer 453ab3fd-6df6-49a4-ba01-fb5b93430a1f"  http://localhost:8080/api/users
 

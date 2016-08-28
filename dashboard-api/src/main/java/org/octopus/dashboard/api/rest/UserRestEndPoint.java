@@ -24,6 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,14 @@ public class UserRestEndPoint {
 	@Inject
 	private UserMailService mailService;
 
+	@RequestMapping(value = "/userinfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal User user)
+			throws URISyntaxException {
+		User appUser = userRepository.findByLoginName(user.getLoginName());
+		return new ResponseEntity<User>(appUser, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	public ResponseEntity<Page<User>> getAllUsers(Pageable pageable)

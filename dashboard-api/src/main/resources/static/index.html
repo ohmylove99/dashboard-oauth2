@@ -4,14 +4,13 @@
     <title>oauth2 Application</title>
     <link href="css/styles.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   </head>
   <body>
 
     <div id="container">
 
 
-      <input id="username" type="text" placeholder="Username">
+      <input id="email" type="email" placeholder="Email">
 
 
 	    <input id="password" type="password" placeholder="Password">
@@ -50,12 +49,12 @@
       if (oauth2.user.is_logged_in())
         window.location = 'dashboard.html'
       $('#login_button').on('click', function () {
-        oauth2.user.login($('#username').val(), $('#password').val(), function (error) {
+        oauth2.user.login($('#email').val(), $('#password').val(), function (error) {
           if (!error)
             window.location = 'dashboard.html'
           else {
             console.log(error)
-            $('#error_message').html('Username and/or password did not match a user account.').show()
+            $('#error_message').html('Email and/or password did not match a user account.').show()
           }
         })
       })

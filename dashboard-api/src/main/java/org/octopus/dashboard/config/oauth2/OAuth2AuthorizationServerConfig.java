@@ -84,19 +84,21 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 		// @formatter:off
 		clients
 				// .jdbc(dataSource())
-				.inMemory().withClient("sampleClientId").authorizedGrantTypes("implicit")
-				.scopes("read", "write", "foo", "bar").autoApprove(false).accessTokenValiditySeconds(3600)
+				.inMemory()
+				.withClient("sampleClientId").authorizedGrantTypes("implicit")
+				.scopes("read", "write", "foo", "bar", "global").autoApprove(true).accessTokenValiditySeconds(3600)
 
 				.and()
-				.withClient(propertyResolver.getProperty(PROP_CLIENTID))
-				.scopes("read", "write")
+				.withClient(propertyResolver.getProperty(PROP_CLIENTID)).authorizedGrantTypes("password", "refresh_token")
+				.scopes("read", "write", "global")
 				.authorities(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
-				.authorizedGrantTypes("password", "refresh_token")
 				.secret(propertyResolver.getProperty(PROP_SECRET))
 				.accessTokenValiditySeconds(propertyResolver.getProperty(PROP_TOKEN_VALIDITY_SECONDS, Integer.class, 1800)) // 30 days
 
-				.and().withClient("barClientIdPassword").secret("secret")
-				.authorizedGrantTypes("password", "authorization_code", "refresh_token").scopes("bar", "read", "write")
+				.and()
+				.withClient("barClientIdPassword").secret("secret")
+				.authorizedGrantTypes("password", "authorization_code", "refresh_token")
+				.scopes("bar", "read", "write","global")
 				.accessTokenValiditySeconds(3600) // 1 hour
 				.refreshTokenValiditySeconds(2592000) // 30 days
 		;

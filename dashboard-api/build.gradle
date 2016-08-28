@@ -38,6 +38,7 @@ dependencies {
 	
 	compile("io.springfox:springfox-swagger2:2.5.0")
 	compile("io.springfox:springfox-swagger-ui:2.5.0")
+	compile("com.google.guava:guava:19.0")
 	
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('org.springframework.boot:spring-boot-configuration-processor')
@@ -57,6 +58,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
 	compile('org.springframework.boot:spring-boot-starter-mail')
 	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	
 	
 	compile('javax.cache:cache-api')
 	compile('org.ehcache:ehcache')
