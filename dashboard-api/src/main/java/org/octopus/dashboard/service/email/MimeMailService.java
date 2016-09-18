@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.octopus.dashboard.Constants;
+import org.octopus.dashboard.service.email.model.EmailTemplateHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +18,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 @Component
 @SuppressWarnings("rawtypes")
 public class MimeMailService {
-	protected static final String DEFAULT_ENCODING = "utf-8";
 	private static Logger logger = LoggerFactory.getLogger(MimeMailService.class);
 
 	protected Template template;
@@ -39,8 +38,8 @@ public class MimeMailService {
 	public void setFreemarkerConfiguration(Configuration freemarkerConfiguration)
 			throws IOException {
 		this.freemarkerConfiguration = freemarkerConfiguration;
-		template = freemarkerConfiguration.getTemplate("mailTemplate.ftl",
-				DEFAULT_ENCODING);
+		template = EmailTemplateHelper.getTemplate(freemarkerConfiguration,
+				"mailTemplate.ftl");
 	}
 
 	public String generateContent(Map map) throws MessagingException {
@@ -49,17 +48,7 @@ public class MimeMailService {
 	}
 
 	public String generateContent(Template template, Map map) throws MessagingException {
-		try {
-			return FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
-		}
-		catch (IOException e) {
-			logger.error(e.getMessage());
-			throw new MessagingException(e.getMessage());
-		}
-		catch (TemplateException e) {
-			logger.error(e.getMessage());
-			throw new MessagingException(e.getMessage());
-		}
+		return EmailTemplateHelper.generateContent(template, map);
 	}
 
 	public File generateAttachment() throws MessagingException {
@@ -82,7 +71,7 @@ public class MimeMailService {
 
 		try {
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true,
-					DEFAULT_ENCODING);
+					Constants.DEFAULT_ENCODING);
 
 			messageHelper.setFrom(from);
 			messageHelper.setTo(to);
@@ -103,10 +92,10 @@ public class MimeMailService {
 		MimeMessage mailMessage = mailSender.createMimeMessage();
 		try {
 			Template tmplt = freemarkerConfiguration.getTemplate(templatePath,
-					DEFAULT_ENCODING);
+					Constants.DEFAULT_ENCODING);
 			String cnt = generateContent(tmplt, templateMap);
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true,
-					DEFAULT_ENCODING);
+					Constants.DEFAULT_ENCODING);
 
 			messageHelper.setFrom(from);
 			messageHelper.setTo(to);
@@ -131,10 +120,10 @@ public class MimeMailService {
 		MimeMessage mailMessage = mailSender.createMimeMessage();
 		try {
 			Template tmplt = freemarkerConfiguration.getTemplate(templatePath,
-					DEFAULT_ENCODING);
+					Constants.DEFAULT_ENCODING);
 			String cnt = generateContent(tmplt, templateMap);
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true,
-					DEFAULT_ENCODING);
+					Constants.DEFAULT_ENCODING);
 
 			messageHelper.setFrom(from);
 			messageHelper.setTo(to);

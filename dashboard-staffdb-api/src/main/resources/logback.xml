@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<property name="PROJECT_ID" value="dashboard-oauth2" />
+	<!-- <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender"> 
+		<layout class="ch.qos.logback.classic.PatternLayout"> <Pattern>%d{HH:mm:ss.SSS} 
+		[%thread] %-5level %logger{35} - %msg %n</Pattern> </layout> <filter class="ch.qos.logback.classic.filter.ThresholdFilter"> 
+		<level>TRACE</level> </filter> </appender> -->
+
+	<appender name="dailyRollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>logs/${PROJECT_ID}.json</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<FileNamePattern>../logs/archive/${PROJECT_ID}.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<!-- <encoder> <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} 
+			- %msg %n</Pattern> </encoder> -->
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>16MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>512</queueSize>
+		<appender-ref ref="dailyRollingFileAppender" />
+	</appender>
+
+	<logger name="org.octopus.dashboard" level="#logback.loglevel#">
+	</logger>
+	<logger name="org.hibernate.ejb.HibernatePersistence" level="OFF" />
+	<logger name="org.apache.catalina.startup.DigesterFactory"
+		level="OFF" />
+	<logger name="javax.activation" level="WARN" />
+	<logger name="javax.mail" level="WARN" />
+	<logger name="javax.xml.bind" level="WARN" />
+	<logger name="ch.qos.logback" level="WARN" />
+	<logger name="com.codahale.metrics" level="WARN" />
+	<logger name="com.ryantenney" level="WARN" />
+	<logger name="com.sun" level="WARN" />
+	<logger name="com.zaxxer" level="WARN" />
+	<logger name="net.sf.ehcache" level="WARN" />
+	<logger name="org.apache" level="WARN" />
+	<logger name="org.apache.catalina.startup.DigesterFactory"
+		level="OFF" />
+	<logger name="org.bson" level="WARN" />
+	<logger name="org.hibernate.validator" level="WARN" />
+	<logger name="org.hibernate" level="WARN" />
+	<logger name="org.ehcache.core" level="OFF" />
+	<logger name="org.ehcache.jsr107" level="OFF" />
+	<logger name="org.hibernate.tool.hbm2ddl" level="OFF" />
+	<logger name="org.hibernate.ejb.HibernatePersistence" level="OFF" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.springframework.web" level="OFF" />
+	<logger name="org.springframework.security" level="WARN" />
+	<logger name="org.springframework.security.oauth2.provider.endpoint" level="INFO" />
+	<logger name="org.springframework.security.oauth2.provider.authentication" level="INFO" />
+	<logger name="org.springframework.security.web" level="OFF" />
+	<logger name="org.springframework.security.web.access.expression" level="INFO" />
+	<logger name="org.springframework.security.web.access.intercept" level="INFO" />
+	<logger name="org.springframework.cache" level="WARN" />
+	<logger name="org.thymeleaf" level="WARN" />
+	<logger name="org.xnio" level="WARN" />
+	<logger name="springfox" level="WARN" />
+	<logger name="sun.rmi" level="WARN" />
+	<logger name="sun.rmi.transport" level="WARN" />
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+	<root level="INFO">
+		<appender-ref ref="dailyRollingFileAppender" />
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration>

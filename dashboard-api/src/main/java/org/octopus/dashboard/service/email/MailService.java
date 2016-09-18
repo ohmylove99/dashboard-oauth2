@@ -13,7 +13,7 @@ public class MailService {
 	protected static final String DEFAULT_ENCODING = "utf-8";
 	private static Logger logger = LoggerFactory.getLogger(MailService.class);
 
-	//@Autowired
+	// @Autowired
 	protected JavaMailSender mailSender;
 
 	public JavaMailSender getMailSender() {
@@ -24,15 +24,19 @@ public class MailService {
 		this.mailSender = mailSender;
 	}
 
-	public void sendMail(String from, String[] to, String[] cc, String subject, String content) {
+	public void sendMail(String from, String[] to, String[] cc, String subject,
+			String content) {
 		SimpleMailMessage mail = new SimpleMailMessage();
 		mail.setFrom(from);
 		mail.setTo(to);
 		mail.setCc(cc);
 		mail.setSubject(subject);
 		mail.setText(content);
-
-		mailSender.send(mail);
+		try {
+			mailSender.send(mail);
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
-
 }

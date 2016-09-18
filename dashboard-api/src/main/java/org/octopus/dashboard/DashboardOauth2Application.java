@@ -34,6 +34,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableConfigurationProperties({ AppProperties.class })
 public class DashboardOauth2Application extends SpringBootServletInitializer {
+	private static final Logger log = LoggerFactory
+			.getLogger(DashboardOauth2Application.class);
+
 	/**
 	 * Main method, used to run the application.
 	 */
@@ -58,9 +61,6 @@ public class DashboardOauth2Application extends SpringBootServletInitializer {
 		DefaultProfileUtil.addDefaultProfile(application.application());
 		return application.sources(DashboardOauth2Application.class);
 	}
-
-	private static final Logger log = LoggerFactory
-			.getLogger(DashboardOauth2Application.class);
 
 	@Inject
 	private Environment env;
@@ -95,14 +95,15 @@ public class DashboardOauth2Application extends SpringBootServletInitializer {
 			app.setAdditionalProfiles(ConfigConstants.SPRING_PROFILE_DEVELOPMENT);
 		}
 	}
-	
+
 	@Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
-        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-        dataSource.setUsername(env.getProperty("spring.datasource.username"));
-        dataSource.setPassword(env.getProperty("spring.datasource.password"));
-        return dataSource;
-    }
+	public DataSource dataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(
+				env.getProperty("spring.datasource.driver-class-name"));
+		dataSource.setUrl(env.getProperty("spring.datasource.url"));
+		dataSource.setUsername(env.getProperty("spring.datasource.username"));
+		dataSource.setPassword(env.getProperty("spring.datasource.password"));
+		return dataSource;
+	}
 }

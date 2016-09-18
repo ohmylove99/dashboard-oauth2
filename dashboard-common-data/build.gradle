@@ -1,0 +1,72 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.RELEASE'
+	}
+	repositories {
+	//	mavenCentral()
+	maven {url 'http://repo1.maven.org/maven2'}
+	maven {url 'http://repo.spring.io/milestone'}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+jar {
+	baseName = 'dashboard-common-data'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	//mavenCentral()
+	maven {url 'http://repo1.maven.org/maven2'}
+	maven {url 'http://repo.spring.io/milestone'}
+}
+
+
+dependencies {
+	compile("javax.inject:javax.inject:1")
+	compile("javax.mail:mail:1.4.7")
+	
+	compile("io.springfox:springfox-swagger2:2.5.0")
+	compile("io.springfox:springfox-swagger-ui:2.5.0")
+	
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.boot:spring-boot-configuration-processor')
+		compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.security.oauth:spring-security-oauth2')
+	compile('org.springframework.security:spring-security-data')
+	
+	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	
+	compile('javax.cache:cache-api')
+	compile('org.ehcache:ehcache')
+	compile('xstream:xstream:1.2.2')
+
+	compile('net.logstash.logback:logstash-logback-encoder:4.7')
+
+	compile('org.testng:testng:6.9.9')
+	compile('mysql:mysql-connector-java')
+	compile('net.sf.dozer:dozer:5.5.1') {
+		exclude(module: 'slf4j-log4j12')
+    }
+    //compile('com.fasterxml.jackson.datatype:jackson-datatype-joda')
+    compile('com.fasterxml.jackson.module:jackson-module-jaxb-annotations')
+    
+	compile('org.apache.commons:commons-lang3:3.4')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}

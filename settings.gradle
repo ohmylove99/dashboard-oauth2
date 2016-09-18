@@ -1,9 +1,15 @@
 rootProject.name = 'dashboard-oauth2'
 
-include ':common'
-include ':api'
-include ':web'
+include ':dashboard-common'
+include ':dashboard-common-data'
+include ':dashboard-api'
+include ':dashboard-web'
+include ':dashboard-staffdb-api'
+include ':dashboard-staffdb-web'
 
-project(':common').projectDir = "$rootDir/dashboard-common" as File
-project(':api').projectDir = "$rootDir/dashboard-api" as File
-project(':web').projectDir = "$rootDir/dashboard-web" as File
+project(':dashboard-common').projectDir = "$rootDir/dashboard-common" as File
+project(':dashboard-common-data').projectDir = "$rootDir/dashboard-common-data" as File
+project(':dashboard-api').projectDir = "$rootDir/dashboard-api" as File
+project(':dashboard-web').projectDir = "$rootDir/dashboard-web" as File
+project(':dashboard-staffdb-api').projectDir = "$rootDir/dashboard-staffdb-api" as File
+project(':dashboard-staffdb-web').projectDir = "$rootDir/dashboard-staffdb-web" as File

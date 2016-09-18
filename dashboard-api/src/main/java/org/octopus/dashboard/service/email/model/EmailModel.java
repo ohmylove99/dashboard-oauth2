@@ -9,7 +9,7 @@ public class EmailModel {
 	private String bcc;
 	private String[] bccs;
 	private String subject;
-	private String text;
+	private String content;
 	private EmailTemplateModel emailTemplateModel;
 
 	public String getFrom() {
@@ -76,12 +76,12 @@ public class EmailModel {
 		this.subject = subject;
 	}
 
-	public String getText() {
-		return text;
+	public String getContent() {
+		return content;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public EmailTemplateModel getEmailTemplateModel() {
