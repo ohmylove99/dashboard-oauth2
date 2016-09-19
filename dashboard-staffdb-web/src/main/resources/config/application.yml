@@ -76,7 +76,7 @@ server:
 #  context-path: /api
 #  compression.enabled: false
 #  display-name: api
-  port: 8080
+  port: 6060
   compression:
      enabled: true
      mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
@@ -128,7 +128,13 @@ info:
     description: ${project.description}
     version: ${project.version}
 
-
+# THYMELEAF (ThymeleafAutoConfiguration)
+spring.thymeleaf.prefix: classpath:/templates/
+spring.thymeleaf.suffix: .html
+spring.thymeleaf.mode: HTML5
+spring.thymeleaf.encoding: UTF-8
+spring.thymeleaf.content-type: text/html # ;charset=<encoding> is added
+spring.thymeleaf.cache: true # set to false for hot refresh
 
 app:
     security:

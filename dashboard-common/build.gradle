@@ -31,7 +31,7 @@ repositories {
 
 
 dependencies {
-	compile project(':dashboard-common-data')
+	//compile project(':dashboard-common-data')
 	compile("javax.inject:javax.inject:1")
 	compile("javax.mail:mail:1.4.7")
 	
