@@ -29,9 +29,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-@Configuration
-public class WebConfigurer
-		implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
+//@Configuration
+public class WebConfigurer{}
+		/*implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
 	private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
@@ -54,9 +54,9 @@ public class WebConfigurer
 		log.info("Web application fully configured");
 	}
 
-	/**
+	*//**
 	 * Set up Mime types and, if needed, set the document root.
-	 */
+	 *//*
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
 		MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
@@ -81,9 +81,9 @@ public class WebConfigurer
 		}
 	}
 
-	/**
+	*//**
 	 * Resolve path prefix to static resources.
-	 */
+	 *//*
 	private String resolvePathPrefix() {
 		String fullExecutablePath = this.getClass().getResource("").getPath();
 		String rootPath = Paths.get(".").toUri().normalize().getPath();
@@ -95,9 +95,9 @@ public class WebConfigurer
 		return extractedPath.substring(0, extractionEndIndex);
 	}
 
-	/**
+	*//**
 	 * Initializes the caching HTTP Headers Filter.
-	 */
+	 *//*
 	private void initCachingHttpHeadersFilter(ServletContext servletContext,
 			EnumSet<DispatcherType> disps) {
 		log.debug("Registering Caching HTTP Headers Filter");
@@ -128,3 +128,4 @@ public class WebConfigurer
 		return bean;
 	}
 }
+*/

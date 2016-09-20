@@ -9,7 +9,16 @@ spring.data:
   rest:
     base-path: /api
 
-spring.datasource:
+spring.datasource.oauth:
+    url: jdbc:mysql://localhost:3306/oauth?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: oauth
+    password: oauth
+    driver-class-name: com.mysql.jdbc.Driver
+    schema: schema.sql
+    data: import.sql
+    initialize: false
+    continueOnError: true
+spring.datasource.staffdb:
     url: jdbc:mysql://localhost:3306/staffdb?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: staffdb
     password: staffdb
@@ -22,7 +31,7 @@ spring.jpa:
         database: MYSQL
         generate-ddl: true
         hibernate:
-            ddl-auto: create #validate#create-drop#create
+            ddl-auto: validate #validate#create-drop#create
         database-platform: org.hibernate.dialect.MySQLDialect
         hibernate.naming.strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy   # Naming strategy fully qualified name.
         show-sql: true # Enable logging of SQL statements.
@@ -127,6 +136,17 @@ info:
     name: ${project.name}
     description: ${project.description}
     version: ${project.version}
+
+# SPRING MVC (HttpMapperProperties)
+http.mappers.json-pretty-print: false # pretty print JSON
+http.mappers.json-sort-keys: false # sort keys
+spring.mvc.locale:  # set fixed locale, e.g. en_UK
+spring.mvc.date-format:  # set fixed date format, e.g. dd/MM/yyyy
+spring.mvc.message-codes-resolver-format:  # PREFIX_ERROR_CODE / POSTFIX_ERROR_CODE
+spring.view.prefix:  # MVC view prefix
+spring.view.suffix:  # ... and suffix
+spring.resources.cache-period:  # cache timeouts in headers sent to browser
+spring.resources.add-mappings: true # if default mappings should be added
 
 # THYMELEAF (ThymeleafAutoConfiguration)
 spring.thymeleaf.prefix: classpath:/templates/

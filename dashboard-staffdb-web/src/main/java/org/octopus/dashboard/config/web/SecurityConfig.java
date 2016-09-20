@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.headers().frameOptions().disable();
 		httpSecurity.authorizeRequests().antMatchers("/**").permitAll();
 		// static resources
-	/*	httpSecurity.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**",
+		httpSecurity.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**",
 				"/resources/**", "/webjars/**").permitAll();
 
 		httpSecurity.authorizeRequests().antMatchers("/signin").anonymous().anyRequest()
@@ -40,8 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/signin?logout");
 
 		httpSecurity.exceptionHandling().accessDeniedPage("/admin/dashboard.html");
-		httpSecurity.sessionManagement().invalidSessionUrl("/signin");*/
+		httpSecurity.sessionManagement().invalidSessionUrl("/signin");
 
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 	}
 
 	@Bean

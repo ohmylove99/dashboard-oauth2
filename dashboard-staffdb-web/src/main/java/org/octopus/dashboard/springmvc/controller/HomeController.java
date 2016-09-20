@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-	@GetMapping("/")
+	@GetMapping("/Home")
 	@Secured("ROLE_ADMIN")
 	public String home(Map<String, Object> model) {
 		model.put("message", "Hello World");

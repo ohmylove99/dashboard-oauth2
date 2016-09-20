@@ -3,13 +3,11 @@ package org.octopus.dashboard;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.octopus.dashboard.config.AppProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -20,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAspectJAutoProxy
 @EnableCaching
 @EnableScheduling
-@EnableConfigurationProperties({ AppProperties.class })
+//@EnableConfigurationProperties({ AppProperties.class })
 public class Application extends SpringBootServletInitializer {
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
