@@ -62,6 +62,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE')
+	compile("org.thymeleaf:thymeleaf-spring4:2.1.2.RELEASE")
+	compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
 	
 	
 	compile('javax.cache:cache-api')
