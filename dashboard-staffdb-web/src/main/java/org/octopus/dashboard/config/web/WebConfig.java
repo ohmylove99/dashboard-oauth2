@@ -51,9 +51,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		registry.addViewController("/signin").setViewName("signin");
 		registry.addViewController("/dashboard").setViewName("dashboard");
 		registry.addViewController("/index").setViewName("index");
-        registry.addViewController("/results").setViewName("results");
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/form").setViewName("form");
+		registry.addViewController("/results").setViewName("results");
+		registry.addViewController("/login").setViewName("login");
+		registry.addViewController("/form").setViewName("form");
 		registry.addViewController("/error/404.html").setViewName("404");
 		registry.addViewController("/error/505.html").setViewName("505");
 	}
@@ -83,14 +83,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 			}
 		};
 	}
-	
-	/*@Configuration
-	public static class WebMvcConfig extends WebMvcConfigurationSupport {
-	    @Override
-	    protected void addInterceptors(InterceptorRegistry registry) {
-	        registry.addInterceptor(new ThymeleafLayoutInterceptor());
-	    }
-	}*/
 }
-
-

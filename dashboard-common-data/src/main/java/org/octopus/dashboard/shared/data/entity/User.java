@@ -31,7 +31,7 @@ public class User {
 	private String name;
 
 	@NotEmpty
-	@Column(unique = true, nullable = false)
+	@Column(name = "login_name", unique = true, nullable = false)
 	private String loginName;
 
 	@JsonIgnore

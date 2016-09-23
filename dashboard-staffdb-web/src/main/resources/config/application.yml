@@ -18,20 +18,20 @@ spring.datasource.oauth:
     data: import.sql
     initialize: false
     continueOnError: true
-spring.datasource.staffdb:
+spring.datasource:
     url: jdbc:mysql://localhost:3306/staffdb?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: staffdb
     password: staffdb
     driver-class-name: com.mysql.jdbc.Driver
     schema: schema.sql
-    data: import.sql
+    data: sql/mysql/data-import.sql
     initialize: false
     continueOnError: true
 spring.jpa:
         database: MYSQL
         generate-ddl: true
         hibernate:
-            ddl-auto: validate #validate#create-drop#create
+            ddl-auto: create #validate#create-drop#create
         database-platform: org.hibernate.dialect.MySQLDialect
         hibernate.naming.strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy   # Naming strategy fully qualified name.
         show-sql: true # Enable logging of SQL statements.

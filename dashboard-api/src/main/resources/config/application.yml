@@ -22,7 +22,7 @@ spring.jpa:
         database: MYSQL
         generate-ddl: true
         hibernate:
-            ddl-auto: create #validate#create-drop#create
+            ddl-auto: validate #validate#create-drop#create
         database-platform: org.hibernate.dialect.MySQLDialect
         hibernate.naming.strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy   # Naming strategy fully qualified name.
         show-sql: true # Enable logging of SQL statements.

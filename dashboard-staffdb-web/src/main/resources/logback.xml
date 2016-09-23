@@ -35,6 +35,7 @@
 
 	<logger name="org.octopus.dashboard" level="#logback.loglevel#">
 	</logger>
+	<logger name="org.octopus.dashboard.config.web" level="OFF" />
 	<logger name="org.hibernate.ejb.HibernatePersistence" level="OFF" />
 	<logger name="org.apache.catalina.startup.DigesterFactory"
 		level="OFF" />

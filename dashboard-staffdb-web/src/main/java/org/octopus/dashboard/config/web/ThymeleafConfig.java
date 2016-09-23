@@ -35,10 +35,10 @@ public class ThymeleafConfig {
 		return templateEngine;
 	}*/
 	
-	@Bean
+	/*@Bean
 	public LayoutDialect layoutDialect() {
 		return new LayoutDialect();
-	}
+	}*/
 	
 	/*@Bean
     public SpringTemplateEngine templateEngine(){
